@@ -1,0 +1,18 @@
+<section [ngClass]="{'loading': !taskList.length}">
+    <ul *ngIf="taskList.length">
+     <li *ngFor="let item of taskList; let i = index">
+      <input type="checkbox" [(ngModel)]="item.checked">
+      <!-- keyup vai verificar toda vez q eu remover um item do campo até chamar a ação caso sejá vazio o campo -->
+      <input type="text" (keyup)="validationInput(item.task, i)" [(ngModel)]="item.task" [ngClass]="{'checked': item.checked}">
+       
+      <!-- pipe {{item | json}}-->
+     
+      <button (click)="deleteItemTaskList(i)">
+        <img src="assets/icons/icon-trash.svg">
+      </button>
+     </li>
+    </ul>
+</section>
+
+<app-todo-input-add-itens (emitItemTask)="setemitItemTask($event)"></app-todo-input-add-itens>
+<app-todo-button-delete-all *ngIf="taskList.length" (click)="deleteAllList()"></app-todo-button-delete-all>
